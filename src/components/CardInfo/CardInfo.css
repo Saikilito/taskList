@@ -1,0 +1,11 @@
+.row-Finished {
+  background-color: #8bc34a;
+}
+
+.row-Urgently {
+  background-color: #ff9800;
+}
+
+.row-TimeOver {
+  background-color: #ff7961;
+}
