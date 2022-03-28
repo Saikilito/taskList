@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,13 +11,22 @@ import { TaskPage } from './TaskPage';
 
 //To Code
 const { formStatus, status: TaskStatus } = CONSTANT.app.task;
+const { dateFormatComplete } = CONSTANT.general.dates;
 const initStatusFormState = formStatus.add;
+
+const TEN = 10;
+const ONE_SECOND = 1000;
+const ONE_MINUTE = 60 * ONE_SECOND;
+const nowDate = new Date().getTime();
+// We add ten minutes to the default date
+const nowPlusTenDate = new Date(nowDate + TEN * ONE_MINUTE);
 
 const initialValues = {
   id: '',
-  task: '',
-  expiration: new Date(),
+  taskDescription: '',
+  expiration: nowPlusTenDate,
   status: TaskStatus.pending,
+  createdAt: moment().format(dateFormatComplete),
 } as Types.Task;
 
 export const TasksPage = () => {

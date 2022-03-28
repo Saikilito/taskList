@@ -9,6 +9,7 @@ import {
   Toolbar,
   Button,
 } from '@mui/material';
+import { AddCircle } from '@mui/icons-material';
 import moment from 'moment';
 
 // Helpers
@@ -17,10 +18,10 @@ import { CONSTANT } from '../../common';
 
 // My Components
 import {
-  CardInfo,
   StatusLegend,
   FormTaskContainer as FormTask,
   FormModal,
+  CardTasks,
 } from '../../components';
 
 // To Code
@@ -36,14 +37,13 @@ export const TaskPage = ({
   handleStatusForm,
   openFormModal,
   handleFormModal,
-  handleRetrieveTaskData,
 }: TaskPageType) => {
   const dispatch = useDispatch();
   return (
     <Container maxWidth="lg">
       <AppBar>
         <Toolbar>
-          <Typography> Today: {now}</Typography>
+          <Typography fontWeight="bold"> Bienvenido a tu lista </Typography>
         </Toolbar>
       </AppBar>
       <br />
@@ -51,20 +51,19 @@ export const TaskPage = ({
       {/** Body */}
       <Grid container direction="column" alignItems="center">
         {/* Header */}
-        <Grid item margin="3rem 0">
-          <Typography align="center" variant="h1">
-            List Task
-          </Typography>
-          <Typography variant="h3">Today: {now} </Typography>
+        <Grid item margin="3rem 0" width="100%">
+          <Grid container justifyContent="space-between">
+            <Typography align="center" variant="h2">
+              Cosas por hacer
+            </Typography>
+            <Typography variant="h6">Hoy: {now} </Typography>
+          </Grid>
         </Grid>
 
-        {/** Task Table*/}
-        <CardInfo
-          rows={tasks}
-          handleStatusForm={handleStatusForm}
-          handleFormModal={handleFormModal}
-          handleRetrieveTaskData={handleRetrieveTaskData}
-          handleDeleteRow={(taskId: string) => dispatch(deleteTask(taskId))}
+        {/** Card Task */}
+        <CardTasks
+          tasks={tasks}
+          handleDeleteTask={(taskId: string) => dispatch(deleteTask(taskId))}
         />
         <br />
 
@@ -75,7 +74,8 @@ export const TaskPage = ({
           variant="contained"
         >
           {' '}
-          Create new task{'  '}
+          Create new task{' '}
+          <AddCircle style={{ color: 'white', margin: '0 10px' }} />
         </Button>
         {/** Form Modal */}
         <FormModal

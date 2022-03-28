@@ -9,7 +9,8 @@ export type Task = {
   id: string;
   expiration: string | Object | Date;
   status: TaskStatusType;
-  task: string;
+  taskDescription: string;
+  createdAt: string;
 };
 
 export type Environment = 'local' | 'test' | 'development' | 'production';

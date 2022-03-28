@@ -40,7 +40,6 @@ function FormTaskContainer({
   // Formik Config
   const formik = useFormik({
     initialValues,
-    isInitialValid: true,
     onSubmit: (values, { resetForm }) => handleTaskSubmit(values, resetForm),
     validationSchema,
   });
@@ -50,15 +49,14 @@ function FormTaskContainer({
 
   // Use for validate form errors
   useEffect(() => {
-    if (formik.touched.task && formik.errors.task) {
-      toast.error(formik.errors.task);
+    if (formik.touched.taskDescription && formik.errors.taskDescription) {
+      toast.error(formik.errors.taskDescription);
     }
   }, [formik.touched, formik.errors]);
 
   // Handlers
   const handleTaskSubmitForCreate: HandleTaskSpecificSubmit = (value) => {
-    const { task, status } = value;
-
+    const { taskDescription, status } = value;
     if (value.expiration === null || value.expiration === '') {
       toast.error('Expiration field is required');
     }
@@ -68,11 +66,20 @@ function FormTaskContainer({
       expiration = moment(value.expiration)?.format(dateFormatComplete);
     }
 
+    const now = moment();
+    if (now.isAfter(moment(expiration, dateFormatComplete))) {
+      const errorMessage =
+        ' No es una fecha valida, por favor, intente nuevamente';
+
+      return toast.error(expiration + errorMessage);
+    }
+
     const newTask: Types.Task = {
       id: uuidv4(),
       status,
-      task,
+      taskDescription,
       expiration: expiration?.toString(),
+      createdAt: value.createdAt,
     };
 
     dispatch(createTask(newTask));

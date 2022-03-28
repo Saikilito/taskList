@@ -20,7 +20,7 @@ import { SelectComponent, DateAndTimePicker } from '../';
 
 // To Code
 export const FormTask = ({
-  initialValues: { task, expiration, status },
+  initialValues: { taskDescription, expiration, status },
   formValues: { formTitle, buttonText },
   selectStatusValues,
   formikSubmitHandle,
@@ -58,14 +58,17 @@ export const FormTask = ({
         <Grid item md={12}>
           <FormControl fullWidth>
             <FormGroup>
-              <InputLabel htmlFor="task">Task Description</InputLabel>
+              <InputLabel htmlFor="taskDescription">
+                Task Description
+              </InputLabel>
               {''}
               <Input
-                id="task"
+                id="taskDescription"
+                name="taskDescription"
                 aria-describedby="task-description-helper-text"
                 onChange={formikHandleChange}
                 onBlur={formikHandleBlur}
-                value={task}
+                value={taskDescription}
                 required
                 autoFocus
               />

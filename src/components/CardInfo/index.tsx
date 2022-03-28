@@ -34,10 +34,16 @@ function CardInfo({
     }
 
     if (params.field === formStatus.edit) {
-      const { id, task, status, expiration } = params.row;
+      const { id, taskDescription, status, expiration, createdAt } = params.row;
 
       handleStatusForm(formStatus.edit);
-      handleRetrieveTaskData({ id, task, status, expiration });
+      handleRetrieveTaskData({
+        id,
+        taskDescription,
+        status,
+        expiration,
+        createdAt,
+      });
       handleFormModal(true);
     }
   };
