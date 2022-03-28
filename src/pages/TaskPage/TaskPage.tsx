@@ -14,7 +14,7 @@ import moment from 'moment';
 
 // Helpers
 import { TaskPageType } from './TaskPage.type';
-import { CONSTANT } from '../../common';
+import { Types, CONSTANT, Helpers } from '../../common';
 
 // My Components
 import {
@@ -26,6 +26,7 @@ import {
 
 // To Code
 const { dateFormat } = CONSTANT.general.dates;
+const { formStatus } = CONSTANT.app.task;
 
 const now = moment().format(dateFormat);
 
@@ -37,6 +38,12 @@ export const TaskPage = ({
   handleStatusForm,
   openFormModal,
   handleFormModal,
+  handleRetrieveTaskData,
+  taskSelected,
+  taskUnselected,
+  orderTasksByStatus,
+  orderTasksByCratedAt,
+  orderTasksByExpiration,
 }: TaskPageType) => {
   const dispatch = useDispatch();
   return (
@@ -63,13 +70,29 @@ export const TaskPage = ({
         {/** Card Task */}
         <CardTasks
           tasks={tasks}
+          handleFormModal={handleFormModal}
+          handleStatusForm={handleStatusForm}
+          taskSelected={(taskId) => dispatch(taskSelected(taskId))}
+          taskUnselected={(taskId) => dispatch(taskUnselected(taskId))}
           handleDeleteTask={(taskId: string) => dispatch(deleteTask(taskId))}
+          orderTasksByExpiration={() => dispatch(orderTasksByExpiration())}
+          orderTasksByCratedAt={() => dispatch(orderTasksByCratedAt())}
+          orderTasksByStatus={() => dispatch(orderTasksByStatus)}
+          handleRetrieveTaskData={handleRetrieveTaskData}
         />
+
         <br />
 
         {/** Form Modal Button */}
         <Button
-          onClick={() => handleFormModal(true)}
+          onClick={() => {
+            handleFormModal(true);
+            handleStatusForm(formStatus.add);
+            const genericTask: Types.Task = Helpers.createGenericTaskInstance(
+              {}
+            );
+            handleRetrieveTaskData(genericTask);
+          }}
           fullWidth
           variant="contained"
         >

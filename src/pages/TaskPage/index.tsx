@@ -37,9 +37,17 @@ export const TasksPage = () => {
 
   // Redux Reducers
   const { selectTask, getTasks, deleteTask } = tasksSlices;
+  const {
+    orderTasksByExpiration,
+    orderTasksByCratedAt,
+    orderTasksByStatus,
+    taskSelected,
+    taskUnselected,
+  } = tasksSlices;
   // Redux State
   const tasksState = useSelector(selectTask);
   const dispatch = useDispatch();
+
   // Tasks
   const { tasks } = tasksState;
 
@@ -64,6 +72,11 @@ export const TasksPage = () => {
       openFormModal={openFormModal}
       handleFormModal={setOpenFormModal}
       handleRetrieveTaskData={handleRetrieveTaskData}
+      orderTasksByExpiration={orderTasksByExpiration}
+      orderTasksByCratedAt={orderTasksByCratedAt}
+      orderTasksByStatus={orderTasksByStatus}
+      taskSelected={taskSelected}
+      taskUnselected={taskUnselected}
     />
   );
 };

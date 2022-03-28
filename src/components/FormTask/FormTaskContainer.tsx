@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { toast } from 'react-toastify';
-import { v4 as uuidv4 } from 'uuid';
+
 import { useFormik } from 'formik';
 import moment from 'moment';
 
 // Helpers
-import { Types, CONSTANT } from '../../common';
+import { Types, CONSTANT, Helpers } from '../../common';
 import { tasksSlices } from '../../redux/slices';
 import { formValues, selectStatusValues } from './FormTask.helper';
 import { validationSchema } from '../../components/FormTask/validations';
@@ -74,13 +74,10 @@ function FormTaskContainer({
       return toast.error(expiration + errorMessage);
     }
 
-    const newTask: Types.Task = {
-      id: uuidv4(),
-      status,
+    const newTask: Types.Task = Helpers.createGenericTaskInstance({
       taskDescription,
-      expiration: expiration?.toString(),
-      createdAt: value.createdAt,
-    };
+      status,
+    });
 
     dispatch(createTask(newTask));
   };
@@ -110,6 +107,7 @@ function FormTaskContainer({
     <>
       <FormTask
         formValues={formValues[statusForm]}
+        handleStatusForm={handleStatusForm}
         initialValues={initialValuesForm}
         selectStatusValues={selectStatusValues}
         formikSubmitHandle={handleSubmit}

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { createAsyncThunk, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
 // Helpers
@@ -37,6 +38,7 @@ export const deleteTaskCase = (builder: ActionReducerMapBuilder<TaskState>) => {
     .addCase(deleteTask.rejected, (state, { payload }) => {
       state.status = 'failed';
       state.errorMessage = 'delete tasks error: ' + JSON.stringify(payload);
+      toast.error(state.errorMessage);
     })
     .addCase(deleteTask.fulfilled, (state, { payload }) => {
       state.tasks = state.tasks.filter((task) => task.id !== payload);

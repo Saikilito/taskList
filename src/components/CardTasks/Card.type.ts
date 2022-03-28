@@ -18,6 +18,9 @@ export type CardHeaderButtonsPropsType = {
   removeTaskId: ({ taskId }: { taskId: string }) => void;
   handleDeleteTask: Dispatch<SetStateAction<string>>;
   handleCheckReset: Dispatch<SetStateAction<boolean>>;
+  orderTasksByExpiration: () => void;
+  orderTasksByCratedAt: () => void;
+  orderTasksByStatus: () => void;
 };
 
 export type CardComponentProps = {
@@ -25,6 +28,12 @@ export type CardComponentProps = {
   addTaskId: React.Dispatch<React.SetStateAction<{ taskId: string }>>;
   removeTaskId: React.Dispatch<React.SetStateAction<{ taskId: string }>>;
   checkReset: boolean;
+  handleRetrieveTaskData: (task: Types.Task) => void;
+  taskSelected: (taskId: string) => void;
+  taskUnselected: (taskId: string) => void;
+  color: string;
+  handleFormModal: Dispatch<SetStateAction<boolean>>;
+  handleStatusForm: Dispatch<SetStateAction<Types.StatusFormType>>;
 };
 
 export type SelectedTaskMethodPropsType = {

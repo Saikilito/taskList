@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { createAsyncThunk, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
 // Helpers
@@ -43,6 +44,7 @@ export const createTaskCase = (builder: ActionReducerMapBuilder<TaskState>) => {
       if (payload && payload.errorMessage) {
         state.status = 'failed';
         state.errorMessage = 'crete tasks error: ' + JSON.stringify(payload);
+        toast.error(state.errorMessage);
       }
     });
 

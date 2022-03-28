@@ -13,6 +13,11 @@ const CONSTANT = {
         add: StatusFormType.add,
         edit: StatusFormType.edit,
       },
+      sortOptions: {
+        createdAt: 'createdAt',
+        expiration: 'expiration',
+        status: 'status',
+      },
     },
   },
   general: {

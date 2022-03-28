@@ -9,17 +9,28 @@ import {
 } from '@mui/material/';
 import { CalendarMonth } from '@mui/icons-material';
 
+// Helpers
+import { CONSTANT } from '../../common';
+
 // My types
 import { CardComponentProps } from './Card.type';
 
 // To Code
+const { formStatus, status: StatusTask } = CONSTANT.app.task;
+
 const label = { inputProps: { 'aria-label': 'Checkbox task' } };
 
 export const CardComponent: React.FC<CardComponentProps> = ({
-  task: { id: taskId, taskDescription, expiration, status },
+  task: { id: taskId, taskDescription, expiration, status, createdAt },
   addTaskId,
   checkReset,
+  color,
   removeTaskId,
+  taskSelected,
+  taskUnselected,
+  handleFormModal,
+  handleStatusForm,
+  handleRetrieveTaskData,
 }) => {
   // Local State
   const [checked, setChecked] = React.useState(false);
@@ -37,13 +48,33 @@ export const CardComponent: React.FC<CardComponentProps> = ({
     setChecked((current) => !current);
 
     if (checked) {
+      taskSelected(taskId);
       return addTaskId({ taskId });
     }
+
+    taskUnselected(taskId);
     return removeTaskId({ taskId });
   };
-
+  const handlerClickCalendarEdit = () => {
+    handleStatusForm(formStatus.edit);
+    handleRetrieveTaskData({
+      id: taskId,
+      taskDescription,
+      status: StatusTask.pending,
+      expiration,
+      createdAt,
+    });
+    handleFormModal(true);
+  };
   return (
-    <Card sx={{ display: 'flex', width: '100%', margin: '1rem 0' }}>
+    <Card
+      sx={{
+        backgroundColor: color,
+        display: 'flex',
+        width: '100%',
+        margin: '1rem 0',
+      }}
+    >
       <Grid container>
         <Grid item>
           <CardContent>
@@ -64,7 +95,15 @@ export const CardComponent: React.FC<CardComponentProps> = ({
           <CardContent>
             <Grid container>
               <Typography>{expiration}</Typography>
-              <CalendarMonth style={{ margin: '0 5px' }} />
+              <CalendarMonth
+                style={{
+                  margin: '0 5px',
+                  cursor: 'pointer',
+                  // background: '#ce93d8',
+                  color: '#880e4f',
+                }}
+                onClick={handlerClickCalendarEdit}
+              />
             </Grid>
           </CardContent>
         </Grid>

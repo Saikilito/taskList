@@ -16,13 +16,13 @@ import {
 import { FormTaskType } from './FormTask.type';
 
 // My Components
-import { SelectComponent, DateAndTimePicker } from '../';
+import { DateAndTimePicker } from '../';
 
-// To Code
 export const FormTask = ({
   initialValues: { taskDescription, expiration, status },
   formValues: { formTitle, buttonText },
-  selectStatusValues,
+  // selectStatusValues,
+  handleStatusForm,
   formikSubmitHandle,
   formikHandleChange,
   formikSetFieldValue,
@@ -79,7 +79,7 @@ export const FormTask = ({
             </FormGroup>
           </FormControl>
         </Grid>
-        <Grid item md={12} margin="2rem 0">
+        {/* <Grid item md={12} margin="2rem 0">
           <SelectComponent
             name="status"
             externalValue={status}
@@ -87,7 +87,7 @@ export const FormTask = ({
             options={selectStatusValues}
             selectTitle={'Status'}
           />
-        </Grid>
+        </Grid> */}
         <Grid item md={12} margin="2rem 0">
           <FormControl fullWidth>
             <FormGroup>

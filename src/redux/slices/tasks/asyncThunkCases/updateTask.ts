@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import axios from 'axios';
 import { createAsyncThunk, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
@@ -6,6 +7,7 @@ import { Types, CONSTANT } from '../../../../common';
 
 // Types
 import { TaskState } from '../TaskState.type';
+import { ThermostatAutoSharp } from "@mui/icons-material";
 
 // To Code
 const currentEnvironment: Types.Environment = process.env.NODE_ENV ?? 'local';
@@ -35,6 +37,7 @@ export const updateTaskCase = (builder: ActionReducerMapBuilder<TaskState>) => {
     .addCase(updateTask.rejected, (state, { payload }) => {
       state.status = 'failed';
       state.errorMessage = 'update tasks error: ' + JSON.stringify(payload);
+      toast.error(state.errorMessage)
     })
     .addCase(updateTask.fulfilled, (state, { payload }) => {
       state.tasks = state.tasks.filter((task) => task.id !== payload.id);

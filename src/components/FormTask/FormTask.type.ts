@@ -47,6 +47,7 @@ export type FormTaskType = {
     value: any,
     shouldValidate?: boolean
   ) => Promise<void> | Promise<FormikErrors<any>>;
+  handleStatusForm: Dispatch<SetStateAction<Types.StatusFormType>>;
 };
 
 export type FormTaskContainerType = {

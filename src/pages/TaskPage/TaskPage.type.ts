@@ -12,4 +12,9 @@ export type TaskPageType = {
   openFormModal: boolean;
   handleFormModal: Dispatch<SetStateAction<boolean>>;
   handleRetrieveTaskData: Dispatch<SetStateAction<Types.Task>>;
+  orderTasksByExpiration: () => void;
+  orderTasksByCratedAt: () => void;
+  orderTasksByStatus: () => void;
+  taskSelected: (taskId: string) => void;
+  taskUnselected: (taskId: string) => void;
 };

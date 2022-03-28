@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { createAsyncThunk, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 
 // Helpers
 import { Types, CONSTANT } from '../../../../common';
+import { reCalculateStatus } from '../tasks.helper';
 
 // Types
 import { TaskState } from '../TaskState.type';
@@ -34,6 +36,7 @@ export const getTasksCase = (builder: ActionReducerMapBuilder<TaskState>) => {
     .addCase(getTasks.rejected, (state, { payload }) => {
       state.status = 'failed';
       state.errorMessage = 'get tasks error: ' + JSON.stringify(payload);
+      toast.error(state.errorMessage);
     })
 
     .addCase(getTasks.fulfilled, (state, { payload }) => {
@@ -41,7 +44,8 @@ export const getTasksCase = (builder: ActionReducerMapBuilder<TaskState>) => {
 
       if (payload && !payload.errorMessage && payload.length) {
         state.tasks = [];
-        state.tasks.push(...payload);
+        const calculatedTask = reCalculateStatus(payload);
+        state.tasks = calculatedTask;
       }
 
       if (payload && payload.errorMessage) {
